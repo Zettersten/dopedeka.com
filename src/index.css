@@ -17,6 +17,30 @@
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --touch-target-min: 44px;
+  --safe-area-inset-top: env(safe-area-inset-top, 0px);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-inset-left: env(safe-area-inset-left, 0px);
+  --safe-area-inset-right: env(safe-area-inset-right, 0px);
+}
+
+.dark-mode {
+  --color-primary: #ff6b7a;
+  --color-primary-dark: #e63946;
+  --color-secondary: #1a1a2e;
+  --color-accent: #5a9bd4;
+  --color-accent-dark: #7bb3e8;
+  --color-background: #16213e;
+  --color-surface: #0f1624;
+  --color-text: #e8e8e8;
+  --color-text-light: #a0a0a0;
+  --color-border: #2a3a5a;
+  --color-success: #06d6a0;
+  --color-warning: #ffd166;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.4);
 }
 
 * {
@@ -34,7 +58,16 @@ body {
   background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-surface) 100%);
   color: var(--color-text);
   min-height: 100vh;
+  min-height: calc(100vh - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
   line-height: 1.6;
+  transition: background 0.3s ease, color 0.3s ease;
+  padding-left: var(--safe-area-inset-left);
+  padding-right: var(--safe-area-inset-right);
+  /* Prevent horizontal scroll on mobile */
+  overflow-x: hidden;
+  /* Better text rendering on mobile */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 #root {

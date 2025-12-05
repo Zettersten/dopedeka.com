@@ -1,6 +1,6 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { TeamMember, Plan } from './types';
-import { createTeamMember, generatePlan, updatePlanAssignments } from './utils/planGenerator';
+import { createTeamMember, generatePlan, updatePlanAssignments, splitExercise, swapExercises, reassignExercise } from './utils/planGenerator';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import TeamMemberInput from './components/TeamMemberInput';
 import PlanDisplay from './components/PlanDisplay';
@@ -13,6 +13,15 @@ function App() {
   ]);
 
   const [plan, setPlan] = useLocalStorage<Plan | null>('deka-plan', null);
+  const [darkMode, setDarkMode] = useLocalStorage<boolean>('deka-dark-mode', false);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark-mode');
+    } else {
+      document.documentElement.classList.remove('dark-mode');
+    }
+  }, [darkMode]);
 
   const handleAddMember = useCallback(() => {
     if (teamMembers.length >= 4) return;
@@ -48,6 +57,24 @@ function App() {
     setPlan(updatedPlan);
   }, [plan, setPlan]);
 
+  const handleSplit = useCallback((exerciseId: string, splitCount: number) => {
+    if (!plan) return;
+    const updatedPlan = splitExercise(plan, exerciseId, splitCount);
+    setPlan(updatedPlan);
+  }, [plan, setPlan]);
+
+  const handleSwap = useCallback((exerciseId1: string, exerciseId2: string) => {
+    if (!plan) return;
+    const updatedPlan = swapExercises(plan, exerciseId1, exerciseId2);
+    setPlan(updatedPlan);
+  }, [plan, setPlan]);
+
+  const handleReassign = useCallback((exerciseId: string, fromMemberId: string, toMemberId: string) => {
+    if (!plan) return;
+    const updatedPlan = reassignExercise(plan, exerciseId, fromMemberId, toMemberId);
+    setPlan(updatedPlan);
+  }, [plan, setPlan]);
+
   const handleReset = useCallback(() => {
     if (confirm('Are you sure you want to reset? This will clear your current plan.')) {
       setPlan(null);
@@ -57,8 +84,20 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>DEKA Team Assignment Tool</h1>
-        <p className="app-subtitle">Create and customize your team's workout plan</p>
+        <div className="header-content">
+          <div>
+            <h1>DEKA Team Assignment Tool</h1>
+            <p className="app-subtitle">Create and customize your team's workout plan</p>
+          </div>
+          <button
+            className="dark-mode-toggle"
+            onClick={() => setDarkMode(!darkMode)}
+            aria-label="Toggle dark mode"
+            title="Toggle dark mode"
+          >
+            {darkMode ? '☀️' : '🌙'}
+          </button>
+        </div>
       </header>
 
       <main className="app-main">
@@ -113,6 +152,9 @@ function App() {
             <PlanDisplay
               plan={plan}
               onAssignmentChange={handleAssignmentChange}
+              onSplit={handleSplit}
+              onSwap={handleSwap}
+              onReassign={handleReassign}
             />
           </div>
         )}
