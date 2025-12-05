@@ -83,31 +83,9 @@ function App() {
 
   return (
     <div className="app">
-      <header className="app-header">
-        <div className="header-content">
-          <div>
-            <h1>DEKA Team Assignment Tool</h1>
-            <p className="app-subtitle">Create and customize your team's workout plan</p>
-          </div>
-          <button
-            className="dark-mode-toggle"
-            onClick={() => setDarkMode(!darkMode)}
-            aria-label="Toggle dark mode"
-            title="Toggle dark mode"
-          >
-            {darkMode ? '☀️' : '🌙'}
-          </button>
-        </div>
-      </header>
-
       <main className="app-main">
         {!plan ? (
           <div className="setup-phase">
-            <div className="setup-header">
-              <h2>Set Up Your Team</h2>
-              <p>Add team members and adjust their strength/cardio preferences</p>
-            </div>
-
             <div className="team-members-section">
               {teamMembers.map((member) => (
                 <TeamMemberInput
@@ -127,7 +105,7 @@ function App() {
                   className="button button-secondary"
                   onClick={handleAddMember}
                 >
-                  + Add Team Member
+                  + Add Member
                 </button>
               )}
               <button
@@ -146,7 +124,15 @@ function App() {
                 className="button button-secondary"
                 onClick={handleReset}
               >
-                Create New Plan
+                Reset
+              </button>
+              <button
+                className="dark-mode-toggle"
+                onClick={() => setDarkMode(!darkMode)}
+                aria-label="Toggle dark mode"
+                title="Toggle dark mode"
+              >
+                {darkMode ? '☀️' : '🌙'}
               </button>
             </div>
             <PlanDisplay
@@ -159,19 +145,6 @@ function App() {
           </div>
         )}
       </main>
-
-      <footer className="app-footer">
-        <p>
-          DEKA Team Assignment Tool •{' '}
-          <a
-            href="https://www.spartan.com/en/deka/mile"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn more about DEKA
-          </a>
-        </p>
-      </footer>
     </div>
   );
 }
