@@ -1,0 +1,16 @@
+{
+  "name": "DEKA Team Assignment Tool",
+  "short_name": "DEKA Teams",
+  "description": "Create and manage your DEKA team exercise challenge plans",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#e63946",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

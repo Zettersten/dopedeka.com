@@ -1,0 +1,116 @@
+.team-member-input {
+  background: var(--color-background);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.team-member-input:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.team-member-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.member-name-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text);
+  transition: border-color 0.2s ease;
+}
+
+.member-name-input:focus {
+  border-color: var(--color-accent);
+}
+
+.remove-button {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: white;
+  font-size: 1.5rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.remove-button:hover {
+  background: var(--color-primary-dark);
+  transform: scale(1.1);
+}
+
+.weight-slider-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.weight-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+  font-weight: 500;
+}
+
+.slider-wrapper {
+  position: relative;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.weight-slider {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.slider-track {
+  position: absolute;
+  width: 100%;
+  height: 0.5rem;
+  background: var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.slider-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent) 0%, var(--color-primary) 100%);
+  border-radius: var(--radius-sm);
+  transition: width 0.2s ease;
+}
+
+.weight-value {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .team-member-input {
+    padding: 1rem;
+  }
+  
+  .member-name-input {
+    font-size: 1rem;
+  }
+}
