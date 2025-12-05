@@ -6,6 +6,8 @@ export interface Exercise {
   type: ExerciseType;
   zone: number;
   description: string;
+  splittable?: boolean; // Whether this exercise can be split
+  isRunning?: boolean; // Whether this is a running exercise (must be done together)
 }
 
 export interface TeamMember {
@@ -18,6 +20,9 @@ export interface Assignment {
   exerciseId: string;
   memberId: string;
   order: number;
+  splitFraction?: number; // For split exercises: 1/4, 1/3, 1/2, etc.
+  parentExerciseId?: string; // If this is a split, reference to original exercise
+  splitIndex?: number; // Index of this split (0, 1, 2, etc.)
 }
 
 export interface Plan {
