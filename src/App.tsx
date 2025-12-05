@@ -13,7 +13,7 @@ function App() {
   ]);
 
   const [plan, setPlan] = useLocalStorage<Plan | null>('deka-plan', null);
-  const [darkMode, setDarkMode] = useLocalStorage<boolean>('deka-dark-mode', false);
+  const [darkMode, setDarkMode] = useLocalStorage<boolean>('deka-dark-mode', true);
 
   useEffect(() => {
     if (darkMode) {
@@ -81,33 +81,32 @@ function App() {
     }
   }, [setPlan]);
 
+  const handleClearAll = useCallback(() => {
+    if (confirm('Are you sure you want to clear all data? This will reset everything including team members and cannot be undone.')) {
+      // Clear all localStorage keys
+      localStorage.removeItem('deka-team-members');
+      localStorage.removeItem('deka-plan');
+      localStorage.removeItem('deka-dark-mode');
+      
+      // Reset state to defaults
+      setTeamMembers([
+        createTeamMember('Team Member 1', 50),
+        createTeamMember('Team Member 2', 50),
+      ]);
+      setPlan(null);
+      setDarkMode(true);
+    }
+  }, [setTeamMembers, setPlan, setDarkMode]);
+
+  const handlePrint = useCallback(() => {
+    window.print();
+  }, []);
+
   return (
     <div className="app">
-      <header className="app-header">
-        <div className="header-content">
-          <div>
-            <h1>DEKA Team Assignment Tool</h1>
-            <p className="app-subtitle">Create and customize your team's workout plan</p>
-          </div>
-          <button
-            className="dark-mode-toggle"
-            onClick={() => setDarkMode(!darkMode)}
-            aria-label="Toggle dark mode"
-            title="Toggle dark mode"
-          >
-            {darkMode ? '☀️' : '🌙'}
-          </button>
-        </div>
-      </header>
-
       <main className="app-main">
         {!plan ? (
           <div className="setup-phase">
-            <div className="setup-header">
-              <h2>Set Up Your Team</h2>
-              <p>Add team members and adjust their strength/cardio preferences</p>
-            </div>
-
             <div className="team-members-section">
               {teamMembers.map((member) => (
                 <TeamMemberInput
@@ -127,7 +126,7 @@ function App() {
                   className="button button-secondary"
                   onClick={handleAddMember}
                 >
-                  + Add Team Member
+                  + Add Member
                 </button>
               )}
               <button
@@ -137,6 +136,13 @@ function App() {
               >
                 Generate Plan
               </button>
+              <button
+                className="button button-secondary"
+                onClick={handleClearAll}
+                title="Clear all data and reset"
+              >
+                Clear All
+              </button>
             </div>
           </div>
         ) : (
@@ -144,9 +150,31 @@ function App() {
             <div className="plan-actions">
               <button
                 className="button button-secondary"
+                onClick={handlePrint}
+                title="Print plan"
+              >
+                Print
+              </button>
+              <button
+                className="button button-secondary"
                 onClick={handleReset}
               >
-                Create New Plan
+                Reset
+              </button>
+              <button
+                className="button button-secondary"
+                onClick={handleClearAll}
+                title="Clear all data and reset"
+              >
+                Clear All
+              </button>
+              <button
+                className="dark-mode-toggle"
+                onClick={() => setDarkMode(!darkMode)}
+                aria-label="Toggle dark mode"
+                title="Toggle dark mode"
+              >
+                {darkMode ? '☀️' : '🌙'}
               </button>
             </div>
             <PlanDisplay
@@ -159,19 +187,6 @@ function App() {
           </div>
         )}
       </main>
-
-      <footer className="app-footer">
-        <p>
-          DEKA Team Assignment Tool •{' '}
-          <a
-            href="https://www.spartan.com/en/deka/mile"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn more about DEKA
-          </a>
-        </p>
-      </footer>
     </div>
   );
 }

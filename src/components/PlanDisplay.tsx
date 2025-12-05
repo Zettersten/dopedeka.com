@@ -88,11 +88,6 @@ export default function PlanDisplay({
 
   return (
     <div className="plan-display">
-      <div className="plan-header">
-        <h2>Your DEKA Team Plan</h2>
-        <p className="plan-subtitle">Customize your workout assignments</p>
-      </div>
-
       <div className="plan-stats">
         {stats.map((stat) => (
           <div key={stat.memberId} className="stat-card">
