@@ -13,7 +13,7 @@ function App() {
   ]);
 
   const [plan, setPlan] = useLocalStorage<Plan | null>('deka-plan', null);
-  const [darkMode, setDarkMode] = useLocalStorage<boolean>('deka-dark-mode', false);
+  const [darkMode, setDarkMode] = useLocalStorage<boolean>('deka-dark-mode', true);
 
   useEffect(() => {
     if (darkMode) {
@@ -81,6 +81,27 @@ function App() {
     }
   }, [setPlan]);
 
+  const handleClearAll = useCallback(() => {
+    if (confirm('Are you sure you want to clear all data? This will reset everything including team members and cannot be undone.')) {
+      // Clear all localStorage keys
+      localStorage.removeItem('deka-team-members');
+      localStorage.removeItem('deka-plan');
+      localStorage.removeItem('deka-dark-mode');
+      
+      // Reset state to defaults
+      setTeamMembers([
+        createTeamMember('Team Member 1', 50),
+        createTeamMember('Team Member 2', 50),
+      ]);
+      setPlan(null);
+      setDarkMode(true);
+    }
+  }, [setTeamMembers, setPlan, setDarkMode]);
+
+  const handlePrint = useCallback(() => {
+    window.print();
+  }, []);
+
   return (
     <div className="app">
       <main className="app-main">
@@ -115,6 +136,13 @@ function App() {
               >
                 Generate Plan
               </button>
+              <button
+                className="button button-secondary"
+                onClick={handleClearAll}
+                title="Clear all data and reset"
+              >
+                Clear All
+              </button>
             </div>
           </div>
         ) : (
@@ -122,9 +150,23 @@ function App() {
             <div className="plan-actions">
               <button
                 className="button button-secondary"
+                onClick={handlePrint}
+                title="Print plan"
+              >
+                Print
+              </button>
+              <button
+                className="button button-secondary"
                 onClick={handleReset}
               >
                 Reset
+              </button>
+              <button
+                className="button button-secondary"
+                onClick={handleClearAll}
+                title="Clear all data and reset"
+              >
+                Clear All
               </button>
               <button
                 className="dark-mode-toggle"

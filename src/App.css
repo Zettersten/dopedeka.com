@@ -160,7 +160,8 @@
 @media print {
   .plan-actions,
   .exercise-actions,
-  .dark-mode-toggle {
+  .dark-mode-toggle,
+  .actions {
     display: none;
   }
 
@@ -170,5 +171,13 @@
 
   body {
     background: white;
+  }
+
+  .dark-mode {
+    --color-background: #ffffff;
+    --color-surface: #f8f9fa;
+    --color-text: #000000;
+    --color-text-light: #666666;
+    --color-border: #cccccc;
   }
 }
