@@ -1,9 +1,10 @@
 .team-member-input {
   background: var(--color-background);
   border-radius: var(--radius-lg);
-  padding: 1.5rem;
+  padding: clamp(1rem, 4vw, 1.5rem);
   box-shadow: var(--shadow-md);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
 }
 
 .team-member-input:hover {
@@ -20,13 +21,17 @@
 
 .member-name-input {
   flex: 1;
-  padding: 0.75rem 1rem;
+  padding: clamp(0.75rem, 3vw, 1rem);
+  min-height: var(--touch-target-min);
   border: 2px solid var(--color-border);
   border-radius: var(--radius-md);
-  font-size: 1.125rem;
+  font-size: clamp(1rem, 3.5vw, 1.125rem);
   font-weight: 600;
   color: var(--color-text);
   transition: border-color 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
 }
 
 .member-name-input:focus {
@@ -34,17 +39,22 @@
 }
 
 .remove-button {
-  width: 2rem;
-  height: 2rem;
+  min-width: var(--touch-target-min);
+  min-height: var(--touch-target-min);
+  width: var(--touch-target-min);
+  height: var(--touch-target-min);
   border-radius: var(--radius-md);
   background: var(--color-primary);
   color: white;
-  font-size: 1.5rem;
+  font-size: clamp(1.25rem, 4vw, 1.5rem);
   line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .remove-button:hover {
@@ -77,15 +87,18 @@
   position: absolute;
   width: 100%;
   height: 100%;
+  min-height: var(--touch-target-min);
   opacity: 0;
   cursor: pointer;
   z-index: 2;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .slider-track {
   position: absolute;
   width: 100%;
-  height: 0.5rem;
+  height: clamp(0.5rem, 2vw, 0.625rem);
   background: var(--color-border);
   border-radius: var(--radius-sm);
   overflow: hidden;
@@ -106,11 +119,20 @@
 }
 
 @media (max-width: 640px) {
-  .team-member-input {
-    padding: 1rem;
+  .team-member-header {
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
   }
-  
-  .member-name-input {
-    font-size: 1rem;
+
+  .weight-slider-container {
+    gap: 0.5rem;
+  }
+
+  .weight-labels {
+    font-size: clamp(0.75rem, 2.5vw, 0.875rem);
+  }
+
+  .weight-value {
+    font-size: clamp(0.8125rem, 2.5vw, 0.875rem);
   }
 }
