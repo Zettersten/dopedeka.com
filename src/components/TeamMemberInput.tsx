@@ -1,4 +1,4 @@
-import { X } from 'lucide-react';
+import { X, Zap, Activity } from 'lucide-react';
 import { TeamMember, Gender } from '../types';
 import './TeamMemberInput.css';
 
@@ -7,16 +7,18 @@ interface TeamMemberInputProps {
   onNameChange: (id: string, name: string) => void;
   onGenderChange: (id: string, gender: Gender) => void;
   onWeightChange: (id: string, weight: number) => void;
+  onCardioCapacityChange: (id: string, capacity: number) => void;
   onRemove: (id: string) => void;
   canRemove: boolean;
 }
 
-/** Team member input card with name, gender, and preference slider */
+/** Team member input card with name, gender, preference, and cardio capacity sliders */
 export default function TeamMemberInput({
   member,
   onNameChange,
   onGenderChange,
   onWeightChange,
+  onCardioCapacityChange,
   onRemove,
   canRemove,
 }: TeamMemberInputProps) {
@@ -29,7 +31,7 @@ export default function TeamMemberInput({
           onClick={() => onRemove(member.id)}
           aria-label="Remove team member"
         >
-          <X size={18} />
+          <X size={16} />
         </button>
       )}
 
@@ -65,9 +67,10 @@ export default function TeamMemberInput({
 
       {/* Preference Slider */}
       <div className="preference-section">
-        <div className="preference-labels">
-          <span className="pref-label cardio">Cardio Focus</span>
-          <span className="pref-label strength">Strength Focus</span>
+        <div className="preference-header">
+          <Activity size={14} className="pref-icon cardio" />
+          <span className="pref-title">Exercise Preference</span>
+          <Zap size={14} className="pref-icon strength" />
         </div>
         
         <div className="slider-container">
@@ -93,10 +96,41 @@ export default function TeamMemberInput({
         </div>
 
         <div className="preference-value">
-          <span className="pref-percent cardio">{100 - member.strengthWeight}%</span>
-          <span className="pref-divider">/</span>
-          <span className="pref-percent strength">{member.strengthWeight}%</span>
+          <span className="pref-percent cardio">{100 - member.strengthWeight}% cardio</span>
+          <span className="pref-percent strength">{member.strengthWeight}% strength</span>
         </div>
+      </div>
+
+      {/* Cardio Capacity / Overall Bias Slider */}
+      <div className="capacity-section">
+        <div className="capacity-header">
+          <span className="capacity-title">Overall Capacity</span>
+          <span className="capacity-value">{member.cardioCapacity}%</span>
+        </div>
+        
+        <div className="slider-container capacity">
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={member.cardioCapacity}
+            onChange={(e) => onCardioCapacityChange(member.id, Number(e.target.value))}
+            className="capacity-slider"
+            aria-label="Cardio capacity percentage"
+          />
+          <div className="slider-track capacity">
+            <div
+              className="slider-fill capacity"
+              style={{ width: `${member.cardioCapacity}%` }}
+            />
+            <div
+              className="slider-thumb capacity"
+              style={{ left: `${member.cardioCapacity}%` }}
+            />
+          </div>
+        </div>
+        
+        <p className="capacity-hint">Higher = takes on more overall workload</p>
       </div>
     </div>
   );

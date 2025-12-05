@@ -1,5 +1,6 @@
 export type ExerciseType = 'strength' | 'cardio';
 export type Gender = 'male' | 'female';
+export type RunMode = 'both' | 'alternate' | 'stronger';
 
 /** Weight specification supporting gender-based requirements */
 export interface WeightSpec {
@@ -27,6 +28,7 @@ export interface TeamMember {
   name: string;
   gender: Gender;
   strengthWeight: number;
+  cardioCapacity: number; // 0-100, higher = more cardio workload
 }
 
 export interface Assignment {
@@ -42,6 +44,7 @@ export interface Plan {
   id: string;
   teamMembers: TeamMember[];
   assignments: Assignment[];
+  runMode: RunMode;
   createdAt: number;
   updatedAt: number;
 }

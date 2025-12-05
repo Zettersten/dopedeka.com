@@ -20,8 +20,18 @@ export default function PrintView({ plan }: PrintViewProps) {
   const formatAssignment = (item: ReturnType<typeof getPlanTimeline>[0]) => {
     const { exercise, assignments } = item;
 
-    if (exercise.isShared || exercise.isRunning) {
+    // For shared exercises, always show BOTH
+    if (exercise.isShared) {
       return 'BOTH';
+    }
+
+    // For running exercises, check how many unique members are assigned
+    if (exercise.isRunning) {
+      const uniqueMembers = [...new Set(assignments.map((a) => a.memberId))];
+      if (uniqueMembers.length === plan.teamMembers.length) {
+        return 'BOTH';
+      }
+      return uniqueMembers.map((id) => getMemberName(id)).join(' / ');
     }
 
     if (assignments.length > 1 && assignments[0].parentExerciseId) {
