@@ -1,18 +1,31 @@
 export type ExerciseType = 'strength' | 'cardio';
+export type Gender = 'male' | 'female';
+
+/** Weight specification supporting gender-based requirements */
+export interface WeightSpec {
+  male: string;
+  female: string;
+}
 
 export interface Exercise {
   id: string;
   name: string;
   type: ExerciseType;
   zone: number;
+  reps?: number | string;
+  distance?: string;
+  weight?: WeightSpec;
+  equipment?: string;
   description: string;
-  splittable?: boolean; // Whether this exercise can be split
-  isRunning?: boolean; // Whether this is a running exercise (must be done together)
+  splittable?: boolean;
+  isRunning?: boolean;
+  isShared?: boolean; // Both team members must complete together
 }
 
 export interface TeamMember {
   id: string;
   name: string;
+  gender: Gender;
   strengthWeight: number;
 }
 
@@ -20,9 +33,9 @@ export interface Assignment {
   exerciseId: string;
   memberId: string;
   order: number;
-  splitFraction?: number; // For split exercises: 1/4, 1/3, 1/2, etc.
-  parentExerciseId?: string; // If this is a split, reference to original exercise
-  splitIndex?: number; // Index of this split (0, 1, 2, etc.)
+  splitFraction?: number;
+  parentExerciseId?: string;
+  splitIndex?: number;
 }
 
 export interface Plan {
@@ -37,3 +50,5 @@ export interface ExerciseZone {
   zone: number;
   exercises: Exercise[];
 }
+
+export type ViewMode = 'cards' | 'timeline';
