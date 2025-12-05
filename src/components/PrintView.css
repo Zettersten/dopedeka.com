@@ -1,0 +1,149 @@
+/* Print View - Only visible when printing */
+.print-view {
+  display: none;
+}
+
+@media print {
+  /* Hide everything else */
+  .app > *:not(.print-view) {
+    display: none !important;
+  }
+
+  .print-view {
+    display: block !important;
+    padding: 0;
+    background: white;
+    color: black;
+    font-size: 11pt;
+    line-height: 1.4;
+  }
+
+  .print-header {
+    text-align: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 3px solid #DC143C;
+  }
+
+  .print-header h1 {
+    font-size: 28pt;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    margin: 0 0 8px;
+    color: #DC143C;
+  }
+
+  .print-team {
+    font-size: 14pt;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .print-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+  }
+
+  .print-table th,
+  .print-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+    vertical-align: top;
+  }
+
+  .print-table th {
+    background: #f5f5f5;
+    font-weight: 700;
+    font-size: 10pt;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #333;
+  }
+
+  .print-table tr:nth-child(even) {
+    background: #fafafa;
+  }
+
+  .print-table tr.running {
+    background: #e8f5e9;
+  }
+
+  .print-table tr.strength .col-zone {
+    border-left: 4px solid #DC143C;
+  }
+
+  .print-table tr.cardio .col-zone {
+    border-left: 4px solid #2196F3;
+  }
+
+  .print-table tr.running .col-zone {
+    border-left: 4px solid #4CAF50;
+  }
+
+  .col-zone {
+    width: 50px;
+    text-align: center;
+    font-weight: 700;
+    color: #666;
+  }
+
+  .col-exercise {
+    width: 200px;
+    font-weight: 600;
+  }
+
+  .col-details {
+    width: 180px;
+    font-size: 10pt;
+    color: #666;
+  }
+
+  .col-weight {
+    width: 80px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .col-assigned {
+    width: 120px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 10pt;
+    letter-spacing: 0.02em;
+  }
+
+  .split-indicator {
+    font-weight: 400;
+    font-style: italic;
+    color: #888;
+  }
+
+  .print-footer {
+    text-align: center;
+    padding-top: 16px;
+    border-top: 1px solid #ddd;
+    font-size: 9pt;
+    color: #888;
+  }
+
+  /* Page settings */
+  @page {
+    margin: 0.5in;
+    size: letter;
+  }
+}
+
+/* Screen preview for debugging - remove in production */
+@media screen {
+  .print-view.preview {
+    display: block;
+    background: white;
+    color: black;
+    padding: 24px;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}

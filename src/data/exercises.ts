@@ -1,26 +1,231 @@
-import { Exercise } from '../types';
+import { Exercise, Gender } from '../types';
 
+/**
+ * DEKA MILE 2025 Official Exercises
+ * Based on official DEKA Rules of Competition v2025
+ * Includes 10 stations with runs between each
+ */
 export const DEKA_EXERCISES: Exercise[] = [
-  { id: '1', name: '1000m SkiErg', type: 'cardio', zone: 1, description: '1000 meter SkiErg', splittable: true },
-  { id: '2', name: '25 Burpee Broad Jumps', type: 'cardio', zone: 2, description: '25 burpee broad jumps' },
-  { id: '3', name: '20 Kettlebell Deadlifts', type: 'strength', zone: 3, description: '20 kettlebell deadlifts' },
-  { id: '4', name: '500m Row', type: 'cardio', zone: 4, description: '500 meter row', splittable: true },
-  { id: '5', name: '20 Thrusters', type: 'strength', zone: 5, description: '20 thrusters' },
-  { id: '6', name: '30 Box Step Overs', type: 'cardio', zone: 6, description: '30 box step overs' },
-  { id: '7', name: '20 Sandbag Squat Cleans', type: 'strength', zone: 7, description: '20 sandbag squat cleans' },
-  { id: '8', name: '1000m Bike', type: 'cardio', zone: 8, description: '1000 meter bike', splittable: true },
-  { id: '9', name: '100m Farmers Walk', type: 'strength', zone: 9, description: '100 meter farmers walk' },
-  { id: '10', name: '100m Sled Push', type: 'strength', zone: 10, description: '100 meter sled push' },
-  { id: 'run-start', name: '0.1 mile Run (Start)', type: 'cardio', zone: 0, description: '0.1 mile run - must start together', isRunning: true },
-  { id: 'run-end', name: '0.1 mile Run (End)', type: 'cardio', zone: 11, description: '0.1 mile run - must end together', isRunning: true },
+  {
+    id: 'run-start',
+    name: 'Run',
+    type: 'cardio',
+    zone: 0,
+    distance: '0.1 mile',
+    description: 'Starting run - both team members run together',
+    isRunning: true,
+    isShared: true,
+  },
+  {
+    id: '1',
+    name: 'RAM Lunges',
+    type: 'strength',
+    zone: 1,
+    reps: 30,
+    weight: { male: '33lb', female: '22lb' },
+    equipment: 'RAM Roller',
+    description: '30 alternating reverse lunges with RAM overhead',
+    splittable: true,
+  },
+  {
+    id: 'run-1',
+    name: 'Run',
+    type: 'cardio',
+    zone: 1.5,
+    distance: '0.1 mile',
+    description: 'Transition run',
+    isRunning: true,
+  },
+  {
+    id: '2',
+    name: 'Row',
+    type: 'cardio',
+    zone: 2,
+    distance: '500m',
+    description: '500 meter row on Concept2 rower',
+    splittable: true,
+  },
+  {
+    id: 'run-2',
+    name: 'Run',
+    type: 'cardio',
+    zone: 2.5,
+    distance: '0.1 mile',
+    description: 'Transition run',
+    isRunning: true,
+  },
+  {
+    id: '3',
+    name: 'Box Step Overs',
+    type: 'cardio',
+    zone: 3,
+    reps: 20,
+    equipment: '24" box',
+    description: '20 box step overs on 24-inch box',
+    splittable: true,
+  },
+  {
+    id: 'run-3',
+    name: 'Run',
+    type: 'cardio',
+    zone: 3.5,
+    distance: '0.1 mile',
+    description: 'Transition run',
+    isRunning: true,
+  },
+  {
+    id: '4',
+    name: 'Med Ball Sit-Ups',
+    type: 'strength',
+    zone: 4,
+    reps: 25,
+    weight: { male: '20lb', female: '14lb' },
+    equipment: 'Medicine Ball',
+    description: '25 sit-ups touching med ball overhead and to floor',
+    splittable: true,
+  },
+  {
+    id: 'run-4',
+    name: 'Run',
+    type: 'cardio',
+    zone: 4.5,
+    distance: '0.1 mile',
+    description: 'Transition run',
+    isRunning: true,
+  },
+  {
+    id: '5',
+    name: 'Ski Erg',
+    type: 'cardio',
+    zone: 5,
+    distance: '500m',
+    description: '500 meter ski on Concept2 SkiErg',
+    splittable: true,
+  },
+  {
+    id: 'run-5',
+    name: 'Run',
+    type: 'cardio',
+    zone: 5.5,
+    distance: '0.1 mile',
+    description: 'Transition run',
+    isRunning: true,
+  },
+  {
+    id: '6',
+    name: 'Farmers Carry',
+    type: 'strength',
+    zone: 6,
+    distance: '100m',
+    weight: { male: '70lb each', female: '40lb each' },
+    equipment: 'Kettlebells',
+    description: '100 meter carry with kettlebells in each hand',
+    splittable: true,
+  },
+  {
+    id: 'run-6',
+    name: 'Run',
+    type: 'cardio',
+    zone: 6.5,
+    distance: '0.1 mile',
+    description: 'Transition run',
+    isRunning: true,
+  },
+  {
+    id: '7',
+    name: 'Air Bike',
+    type: 'cardio',
+    zone: 7,
+    reps: '25 Cal',
+    description: '25 calories on Assault Air Bike',
+    splittable: true,
+  },
+  {
+    id: 'run-7',
+    name: 'Run',
+    type: 'cardio',
+    zone: 7.5,
+    distance: '0.1 mile',
+    description: 'Transition run',
+    isRunning: true,
+  },
+  {
+    id: '8',
+    name: 'Ball Shoulder Overs',
+    type: 'strength',
+    zone: 8,
+    reps: 20,
+    weight: { male: '70lb', female: '40lb' },
+    equipment: 'D-Ball',
+    description: '20 ball shoulder-to-shoulder movements',
+    splittable: true,
+  },
+  {
+    id: 'run-8',
+    name: 'Run',
+    type: 'cardio',
+    zone: 8.5,
+    distance: '0.1 mile',
+    description: 'Transition run',
+    isRunning: true,
+  },
+  {
+    id: '9',
+    name: 'Sled Push/Pull',
+    type: 'strength',
+    zone: 9,
+    distance: '100m',
+    weight: { male: '180lb', female: '90lb' },
+    equipment: 'Tank Sled',
+    description: '50m push + 50m pull with sled',
+    splittable: true,
+  },
+  {
+    id: 'run-9',
+    name: 'Run',
+    type: 'cardio',
+    zone: 9.5,
+    distance: '0.1 mile',
+    description: 'Final transition run - both together',
+    isRunning: true,
+    isShared: true,
+  },
+  {
+    id: '10',
+    name: 'RAM Burpees',
+    type: 'strength',
+    zone: 10,
+    reps: 20,
+    weight: { male: '33lb', female: '22lb' },
+    equipment: 'RAM Roller',
+    description: '20 burpees with RAM overhead press at top',
+    splittable: true,
+  },
 ];
 
-export const getExercisesByType = (type: 'strength' | 'cardio'): Exercise[] => {
-  return DEKA_EXERCISES.filter(ex => ex.type === type);
+/** Get exercises by type */
+export const getExercisesByType = (type: 'strength' | 'cardio'): Exercise[] =>
+  DEKA_EXERCISES.filter((ex) => ex.type === type);
+
+/** Get exercise by ID */
+export const getExerciseById = (id: string): Exercise | undefined =>
+  DEKA_EXERCISES.find((ex) => ex.id === id);
+
+/** Get only station exercises (non-running) */
+export const getStationExercises = (): Exercise[] =>
+  DEKA_EXERCISES.filter((ex) => !ex.isRunning);
+
+/** Get formatted weight for display based on gender */
+export const getWeightForGender = (exercise: Exercise, gender: Gender): string =>
+  exercise.weight?.[gender] ?? '';
+
+/** Get exercise display name with reps/distance */
+export const getExerciseDisplayName = (exercise: Exercise): string => {
+  if (exercise.isRunning) return `${exercise.distance} ${exercise.name}`;
+  if (exercise.reps) return `${exercise.reps} ${exercise.name}`;
+  if (exercise.distance) return `${exercise.distance} ${exercise.name}`;
+  return exercise.name;
 };
 
-export const getExerciseById = (id: string): Exercise | undefined => {
-  return DEKA_EXERCISES.find(ex => ex.id === id);
-};
-
-export const getTotalExercises = (): number => DEKA_EXERCISES.length;
+/** Total number of zones/stations */
+export const TOTAL_STATIONS = 10;
