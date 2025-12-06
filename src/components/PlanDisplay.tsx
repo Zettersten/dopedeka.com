@@ -145,7 +145,7 @@ export default function PlanDisplay({
                   )}
 
                   {/* Assignment Section */}
-                  {exercise.isRunning || exercise.isShared ? (
+                  {exercise.isShared ? (
                     <div className="shared-assignment">
                       <Users size={14} />
                       <span>Both team members</span>
@@ -213,7 +213,7 @@ export default function PlanDisplay({
                   )}
 
                   {/* Action Buttons */}
-                  {!exercise.isRunning && !exercise.isShared && !assignmentIsSplit && (
+                  {!exercise.isShared && !assignmentIsSplit && (
                     <div className="action-row">
                       {exercise.splittable && (
                         <button

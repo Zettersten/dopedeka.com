@@ -27,6 +27,7 @@ export interface TeamMember {
   name: string;
   gender: Gender;
   strengthWeight: number;
+  fitnessLevel: number; // 0-100, represents overall fitness/capability
 }
 
 export interface Assignment {

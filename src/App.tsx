@@ -12,8 +12,8 @@ import './App.css';
 
 function App() {
   const [teamMembers, setTeamMembers] = useLocalStorage<TeamMember[]>('deka-team-members', [
-    createTeamMember('', 'female', 50),
-    createTeamMember('', 'female', 50),
+    createTeamMember('', 'female', 50, 50),
+    createTeamMember('', 'female', 50, 50),
   ]);
 
   const [plan, setPlan] = useLocalStorage<Plan | null>('deka-plan', null);
@@ -26,7 +26,7 @@ function App() {
 
   const handleAddMember = useCallback(() => {
     if (teamMembers.length >= 4) return;
-    setTeamMembers([...teamMembers, createTeamMember('', 'female', 50)]);
+    setTeamMembers([...teamMembers, createTeamMember('', 'female', 50, 50)]);
   }, [teamMembers, setTeamMembers]);
 
   const handleRemoveMember = useCallback(
@@ -54,6 +54,13 @@ function App() {
   const handleWeightChange = useCallback(
     (id: string, weight: number) => {
       setTeamMembers(teamMembers.map((m) => (m.id === id ? { ...m, strengthWeight: weight } : m)));
+    },
+    [teamMembers, setTeamMembers]
+  );
+
+  const handleFitnessChange = useCallback(
+    (id: string, fitness: number) => {
+      setTeamMembers(teamMembers.map((m) => (m.id === id ? { ...m, fitnessLevel: fitness } : m)));
     },
     [teamMembers, setTeamMembers]
   );
@@ -106,7 +113,7 @@ function App() {
       window.localStorage.removeItem('deka-team-members');
       window.localStorage.removeItem('deka-plan');
       window.localStorage.removeItem('deka-dark-mode');
-      setTeamMembers([createTeamMember('', 'female', 50), createTeamMember('', 'female', 50)]);
+      setTeamMembers([createTeamMember('', 'female', 50, 50), createTeamMember('', 'female', 50, 50)]);
       setPlan(null);
       setDarkMode(true);
     }
@@ -148,6 +155,7 @@ function App() {
                   onNameChange={handleNameChange}
                   onGenderChange={handleGenderChange}
                   onWeightChange={handleWeightChange}
+                  onFitnessChange={handleFitnessChange}
                   onRemove={handleRemoveMember}
                   canRemove={teamMembers.length > 1}
                 />

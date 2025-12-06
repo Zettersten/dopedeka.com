@@ -1,33 +1,33 @@
 .plan-display {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
   padding-bottom: 100px;
 }
 
 /* Stats Bar */
 .stats-bar {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 0 8px;
+  padding: 0;
 }
 
 .stat-chip {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
+  gap: 10px;
+  padding: 8px 14px;
   background: var(--color-surface);
-  border-radius: 12px;
-  border: 2px solid var(--color-border);
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
   transition: all 0.2s;
 }
 
 .stat-chip:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
 }
 
 .stat-chip.member-1 { border-color: var(--color-primary); }
@@ -37,7 +37,7 @@
 
 .stat-name {
   font-weight: 600;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
 }
 
 .stat-badges {
@@ -85,20 +85,20 @@
 .exercise-card {
   width: 100%;
   background: var(--color-surface);
-  border-radius: 16px;
-  border: 2px solid var(--color-border);
+  border-radius: 14px;
+  border: 1px solid var(--color-border);
   overflow: hidden;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 }
 
 .exercise-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .exercise-card.strength {
-  border-left: 4px solid var(--color-primary);
+  border-left: 3px solid var(--color-primary);
 }
 
 .exercise-card.strength:hover {
@@ -106,7 +106,7 @@
 }
 
 .exercise-card.cardio {
-  border-left: 4px solid var(--color-accent);
+  border-left: 3px solid var(--color-accent);
 }
 
 .exercise-card.cardio:hover {
@@ -114,8 +114,8 @@
 }
 
 .exercise-card.running {
-  border-left: 4px solid var(--color-success);
-  background: linear-gradient(135deg, var(--color-surface) 0%, rgba(0, 255, 65, 0.05) 100%);
+  border-left: 3px solid var(--color-success);
+  background: linear-gradient(135deg, var(--color-surface) 0%, rgba(0, 255, 65, 0.03) 100%);
 }
 
 .exercise-card.running:hover {
@@ -157,22 +157,22 @@
 
 /* Card Content */
 .card-content {
-  padding: 20px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 12px;
-  padding-top: 8px;
+  gap: 10px;
+  padding-top: 6px;
 }
 
 .exercise-name {
-  font-size: 1.0625rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--color-text);
   display: flex;

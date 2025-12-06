@@ -12,9 +12,9 @@ export const DEKA_EXERCISES: Exercise[] = [
     type: 'cardio',
     zone: 0,
     distance: '0.1 mile',
-    description: 'Starting run - both team members run together',
+    description: 'Starting run - can be done by one or both team members',
     isRunning: true,
-    isShared: true,
+    splittable: false,
   },
   {
     id: '1',
@@ -35,6 +35,7 @@ export const DEKA_EXERCISES: Exercise[] = [
     distance: '0.1 mile',
     description: 'Transition run',
     isRunning: true,
+    splittable: false,
   },
   {
     id: '2',
@@ -53,6 +54,7 @@ export const DEKA_EXERCISES: Exercise[] = [
     distance: '0.1 mile',
     description: 'Transition run',
     isRunning: true,
+    splittable: false,
   },
   {
     id: '3',
@@ -72,6 +74,7 @@ export const DEKA_EXERCISES: Exercise[] = [
     distance: '0.1 mile',
     description: 'Transition run',
     isRunning: true,
+    splittable: false,
   },
   {
     id: '4',
@@ -92,6 +95,7 @@ export const DEKA_EXERCISES: Exercise[] = [
     distance: '0.1 mile',
     description: 'Transition run',
     isRunning: true,
+    splittable: false,
   },
   {
     id: '5',
@@ -110,6 +114,7 @@ export const DEKA_EXERCISES: Exercise[] = [
     distance: '0.1 mile',
     description: 'Transition run',
     isRunning: true,
+    splittable: false,
   },
   {
     id: '6',
@@ -130,6 +135,7 @@ export const DEKA_EXERCISES: Exercise[] = [
     distance: '0.1 mile',
     description: 'Transition run',
     isRunning: true,
+    splittable: false,
   },
   {
     id: '7',
@@ -148,6 +154,7 @@ export const DEKA_EXERCISES: Exercise[] = [
     distance: '0.1 mile',
     description: 'Transition run',
     isRunning: true,
+    splittable: false,
   },
   {
     id: '8',
@@ -168,6 +175,7 @@ export const DEKA_EXERCISES: Exercise[] = [
     distance: '0.1 mile',
     description: 'Transition run',
     isRunning: true,
+    splittable: false,
   },
   {
     id: '9',

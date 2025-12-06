@@ -7,6 +7,7 @@ interface TeamMemberInputProps {
   onNameChange: (id: string, name: string) => void;
   onGenderChange: (id: string, gender: Gender) => void;
   onWeightChange: (id: string, weight: number) => void;
+  onFitnessChange: (id: string, fitness: number) => void;
   onRemove: (id: string) => void;
   canRemove: boolean;
 }
@@ -17,6 +18,7 @@ export default function TeamMemberInput({
   onNameChange,
   onGenderChange,
   onWeightChange,
+  onFitnessChange,
   onRemove,
   canRemove,
 }: TeamMemberInputProps) {
@@ -96,6 +98,41 @@ export default function TeamMemberInput({
           <span className="pref-percent cardio">{100 - member.strengthWeight}%</span>
           <span className="pref-divider">/</span>
           <span className="pref-percent strength">{member.strengthWeight}%</span>
+        </div>
+      </div>
+
+      {/* Fitness Level Slider */}
+      <div className="preference-section">
+        <div className="preference-labels">
+          <span className="pref-label-single">Overall Fitness Level</span>
+        </div>
+        
+        <div className="slider-container">
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={member.fitnessLevel}
+            onChange={(e) => onFitnessChange(member.id, Number(e.target.value))}
+            className="preference-slider"
+            aria-label="Overall fitness level"
+          />
+          <div className="slider-track fitness">
+            <div
+              className="slider-fill fitness"
+              style={{ width: `${member.fitnessLevel}%` }}
+            />
+            <div
+              className="slider-thumb"
+              style={{ left: `${member.fitnessLevel}%` }}
+            />
+          </div>
+        </div>
+
+        <div className="preference-value">
+          <span className="fitness-label">Lower</span>
+          <span className="pref-percent fitness">{member.fitnessLevel}%</span>
+          <span className="fitness-label">Higher</span>
         </div>
       </div>
     </div>

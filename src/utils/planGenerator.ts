@@ -7,12 +7,14 @@ const generateId = (): string => `${Date.now()}-${Math.random().toString(36).sli
 export const createTeamMember = (
   name: string,
   gender: Gender = 'female',
-  strengthWeight = 50
+  strengthWeight = 50,
+  fitnessLevel = 50
 ): TeamMember => ({
   id: `member-${generateId()}`,
   name: name.trim() || 'Team Member',
   gender,
   strengthWeight: Math.max(0, Math.min(100, strengthWeight)),
+  fitnessLevel: Math.max(0, Math.min(100, fitnessLevel)),
 });
 
 /** Generate an optimized plan based on team member preferences */
@@ -31,8 +33,8 @@ export const generatePlan = (teamMembers: TeamMember[]): Plan => {
   let order = 1;
 
   for (const exercise of exercises) {
-    // Running/shared exercises assigned to all members
-    if (exercise.isRunning || exercise.isShared) {
+    // Shared exercises (like final run) assigned to all members
+    if (exercise.isShared) {
       teamMembers.forEach((m) => {
         assignments.push({ exerciseId: exercise.id, memberId: m.id, order });
         const w = workloads.find((x) => x.memberId === m.id)!;
@@ -40,6 +42,16 @@ export const generatePlan = (teamMembers: TeamMember[]): Plan => {
         w.cardio++;
       });
       order++;
+      continue;
+    }
+
+    // Running exercises - assign to one member (whoever has less cardio work)
+    if (exercise.isRunning) {
+      const selectedId = selectOptimalMember(teamMembers, workloads, 'cardio');
+      assignments.push({ exerciseId: exercise.id, memberId: selectedId, order: order++ });
+      const w = workloads.find((x) => x.memberId === selectedId)!;
+      w.total++;
+      w.cardio++;
       continue;
     }
 
@@ -69,7 +81,7 @@ export const generatePlan = (teamMembers: TeamMember[]): Plan => {
   };
 };
 
-/** Select optimal member based on preference and current workload */
+/** Select optimal member based on preference, fitness level, and current workload */
 const selectOptimalMember = (
   members: TeamMember[],
   workloads: { memberId: string; strength: number; cardio: number; total: number }[],
@@ -85,8 +97,14 @@ const selectOptimalMember = (
     const prefA = type === 'strength' ? a.strengthWeight / 100 : (100 - a.strengthWeight) / 100;
     const prefB = type === 'strength' ? b.strengthWeight / 100 : (100 - b.strengthWeight) / 100;
 
-    const scoreA = prefA - ratioA;
-    const scoreB = prefB - ratioB;
+    // Fitness level influences overall workload capacity
+    // Higher fitness = can take more exercises
+    const fitnessA = a.fitnessLevel / 100;
+    const fitnessB = b.fitnessLevel / 100;
+
+    // Score combines preference match and fitness-adjusted workload
+    const scoreA = prefA - ratioA + (fitnessA * 0.3);
+    const scoreB = prefB - ratioB + (fitnessB * 0.3);
 
     return Math.abs(scoreA - scoreB) < 0.1 ? wa.total - wb.total : scoreB - scoreA;
   });

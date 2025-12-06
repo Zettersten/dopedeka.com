@@ -2,23 +2,23 @@
   position: relative;
   background: var(--color-surface);
   border-radius: 16px;
-  padding: 24px;
-  border: 2px solid var(--color-border);
+  padding: 20px;
+  border: 1px solid var(--color-border);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .team-member-card:hover {
   border-color: var(--color-primary);
   box-shadow: var(--shadow-md);
-  transform: translateY(-4px);
+  transform: translateY(-2px);
 }
 
 .team-member-card:focus-within {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 4px rgba(220, 20, 60, 0.15);
+  box-shadow: 0 0 0 3px rgba(220, 20, 60, 0.1);
 }
 
 /* Remove Button */
@@ -48,10 +48,10 @@
 /* Name Input */
 .name-input {
   width: 100%;
-  padding: 14px 16px;
-  border: 2px solid var(--color-border);
-  border-radius: 12px;
-  font-size: 1.125rem;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  font-size: 1.0625rem;
   font-weight: 600;
   color: var(--color-text);
   background: var(--color-background);
@@ -61,7 +61,7 @@
 .name-input:focus {
   border-color: var(--color-primary);
   outline: none;
-  box-shadow: 0 0 0 4px rgba(220, 20, 60, 0.1);
+  box-shadow: 0 0 0 3px rgba(220, 20, 60, 0.1);
 }
 
 .name-input::placeholder {
@@ -115,6 +115,14 @@
   justify-content: space-between;
 }
 
+.pref-label-single {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text);
+}
+
 .pref-label {
   font-size: 0.75rem;
   font-weight: 600;
@@ -154,6 +162,10 @@
   background: linear-gradient(90deg, var(--color-accent) 0%, var(--color-border) 50%, var(--color-primary) 100%);
   border-radius: 4px;
   overflow: visible;
+}
+
+.slider-track.fitness {
+  background: linear-gradient(90deg, #666 0%, var(--color-success) 100%);
 }
 
 .slider-fill {
@@ -203,6 +215,16 @@
 
 .pref-percent.strength {
   color: var(--color-primary);
+}
+
+.pref-percent.fitness {
+  color: var(--color-success);
+}
+
+.fitness-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-light);
 }
 
 .pref-divider {
