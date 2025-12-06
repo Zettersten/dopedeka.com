@@ -12,7 +12,7 @@ export const DEKA_EXERCISES: Exercise[] = [
     type: 'cardio',
     zone: 0,
     distance: '0.1 mile',
-    description: 'Starting run - can be done by one or both team members',
+    description: 'Starting run - assigned to one team member',
     isRunning: true,
     splittable: false,
   },

@@ -3,6 +3,9 @@ import { DEKA_EXERCISES, getExerciseById } from '../data/exercises';
 
 const generateId = (): string => `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
 
+/** Weight factor for fitness level in assignment algorithm (0-1) */
+const FITNESS_WEIGHT_FACTOR = 0.3;
+
 /** Create a new team member with defaults */
 export const createTeamMember = (
   name: string,
@@ -103,8 +106,8 @@ const selectOptimalMember = (
     const fitnessB = b.fitnessLevel / 100;
 
     // Score combines preference match and fitness-adjusted workload
-    const scoreA = prefA - ratioA + (fitnessA * 0.3);
-    const scoreB = prefB - ratioB + (fitnessB * 0.3);
+    const scoreA = prefA - ratioA + (fitnessA * FITNESS_WEIGHT_FACTOR);
+    const scoreB = prefB - ratioB + (fitnessB * FITNESS_WEIGHT_FACTOR);
 
     return Math.abs(scoreA - scoreB) < 0.1 ? wa.total - wb.total : scoreB - scoreA;
   });

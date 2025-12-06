@@ -130,9 +130,9 @@ export default function TeamMemberInput({
         </div>
 
         <div className="preference-value">
-          <span className="fitness-label">Lower</span>
+          <span className="fitness-label" aria-label="Lower fitness level">Lower</span>
           <span className="pref-percent fitness">{member.fitnessLevel}%</span>
-          <span className="fitness-label">Higher</span>
+          <span className="fitness-label" aria-label="Higher fitness level">Higher</span>
         </div>
       </div>
     </div>
