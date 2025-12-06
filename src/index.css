@@ -7,23 +7,44 @@
   --color-accent: #2196F3;
   --color-accent-dark: #1565C0;
   --color-background: #0A0A0A;
-  --color-surface: #151515;
+  --color-surface: #121212;
+  --color-surface-elevated: #1a1a1a;
   --color-text: #FFFFFF;
-  --color-text-light: #9CA3AF;
-  --color-border: #2A2A2A;
+  --color-text-secondary: #B0B0B0;
+  --color-text-muted: #6B7280;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-subtle: rgba(255, 255, 255, 0.04);
   --color-success: #00E676;
   --color-warning: #FFD600;
   
-  /* Shadows with crimson glow */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(220, 20, 60, 0.1);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(220, 20, 60, 0.15);
+  /* Shadows - subtle, modern */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 0 20px rgba(220, 20, 60, 0.15);
+  
+  /* Spacing scale */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
   
   /* Radii */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
   --radius-xl: 20px;
+  
+  /* Typography */
+  --font-xs: 0.6875rem;
+  --font-sm: 0.8125rem;
+  --font-base: 0.9375rem;
+  --font-lg: 1.0625rem;
+  --font-xl: 1.25rem;
+  --font-2xl: 1.5rem;
+  --font-3xl: 2rem;
   
   /* Touch targets */
   --touch-target-min: 44px;
@@ -42,10 +63,13 @@
   --color-accent: #42A5F5;
   --color-accent-dark: #1E88E5;
   --color-background: #0A0A0A;
-  --color-surface: #151515;
+  --color-surface: #121212;
+  --color-surface-elevated: #1a1a1a;
   --color-text: #FFFFFF;
-  --color-text-light: #9CA3AF;
-  --color-border: #2A2A2A;
+  --color-text-secondary: #B0B0B0;
+  --color-text-muted: #6B7280;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-subtle: rgba(255, 255, 255, 0.04);
   --color-success: #00E676;
   --color-warning: #FFD600;
 }
@@ -76,7 +100,9 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   line-height: 1.5;
-  font-weight: 450;
+  font-weight: 400;
+  font-size: var(--font-base);
+  letter-spacing: -0.01em;
   overflow-x: hidden;
   transition: background 0.3s ease, color 0.3s ease;
 }
@@ -99,9 +125,23 @@ body::before {
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  color: var(--color-text);
+}
+
+h1 { font-size: var(--font-3xl); }
+h2 { font-size: var(--font-2xl); }
+h3 { font-size: var(--font-xl); }
+
+p {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.text-muted {
+  color: var(--color-text-muted);
 }
 
 /* Interactive Elements */
@@ -146,8 +186,8 @@ select:focus-visible {
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -155,18 +195,18 @@ select:focus-visible {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-light);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 /* Firefox scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
 }
 
 /* Focus visible for accessibility */
@@ -201,7 +241,8 @@ select:focus-visible {
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   :root {
-    --color-border: #555;
-    --color-text-light: #ccc;
+    --color-border: rgba(255, 255, 255, 0.3);
+    --color-text-secondary: #ddd;
+    --color-text-muted: #aaa;
   }
 }

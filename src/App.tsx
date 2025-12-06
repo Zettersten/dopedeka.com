@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Plus, Sparkles, Trash2 } from 'lucide-react';
-import { TeamMember, Plan, ViewMode, Gender } from './types';
+import { TeamMember, Plan, ViewMode, Gender, RunMode } from './types';
 import { createTeamMember, generatePlan, updatePlanAssignments, splitExercise, swapExercises, reassignExercise } from './utils/planGenerator';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import TeamMemberInput from './components/TeamMemberInput';
@@ -10,15 +10,39 @@ import PrintView from './components/PrintView';
 import FloatingToolbar from './components/FloatingToolbar';
 import './App.css';
 
+/** Migrate team members to include cardioCapacity if missing */
+const migrateTeamMembers = (members: TeamMember[]): TeamMember[] =>
+  members.map((m) => ({
+    ...m,
+    cardioCapacity: m.cardioCapacity ?? 50,
+  }));
+
 function App() {
   const [teamMembers, setTeamMembers] = useLocalStorage<TeamMember[]>('deka-team-members', [
-    createTeamMember('', 'female', 50),
-    createTeamMember('', 'female', 50),
+    createTeamMember('', 'female', 50, 50),
+    createTeamMember('', 'female', 50, 50),
   ]);
 
   const [plan, setPlan] = useLocalStorage<Plan | null>('deka-plan', null);
   const [darkMode, setDarkMode] = useLocalStorage<boolean>('deka-dark-mode', true);
+  const [runMode, setRunMode] = useLocalStorage<RunMode>('deka-run-mode', 'both');
   const [viewMode, setViewMode] = useState<ViewMode>('cards');
+
+  // Migrate existing data on mount (intentionally runs only once)
+  useEffect(() => {
+    const stored = window.localStorage.getItem('deka-team-members');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored) as TeamMember[];
+        const needsMigration = parsed.some((m) => m.cardioCapacity === undefined);
+        if (needsMigration) {
+          setTeamMembers(migrateTeamMembers(parsed));
+        }
+      } catch {
+        // Invalid data, will use defaults
+      }
+    }
+  }, [setTeamMembers]);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark-mode', darkMode);
@@ -26,7 +50,7 @@ function App() {
 
   const handleAddMember = useCallback(() => {
     if (teamMembers.length >= 4) return;
-    setTeamMembers([...teamMembers, createTeamMember('', 'female', 50)]);
+    setTeamMembers([...teamMembers, createTeamMember('', 'female', 50, 50)]);
   }, [teamMembers, setTeamMembers]);
 
   const handleRemoveMember = useCallback(
@@ -58,14 +82,21 @@ function App() {
     [teamMembers, setTeamMembers]
   );
 
+  const handleCardioCapacityChange = useCallback(
+    (id: string, capacity: number) => {
+      setTeamMembers(teamMembers.map((m) => (m.id === id ? { ...m, cardioCapacity: capacity } : m)));
+    },
+    [teamMembers, setTeamMembers]
+  );
+
   const handleGeneratePlan = useCallback(() => {
     const validMembers = teamMembers.filter((m) => m.name.trim().length > 0);
     if (validMembers.length === 0) {
       alert('Please add at least one team member with a name');
       return;
     }
-    setPlan(generatePlan(validMembers));
-  }, [teamMembers, setPlan]);
+    setPlan(generatePlan(validMembers, runMode));
+  }, [teamMembers, runMode, setPlan]);
 
   const handleAssignmentChange = useCallback(
     (exerciseId: string, newMemberId: string) => {
@@ -106,11 +137,13 @@ function App() {
       window.localStorage.removeItem('deka-team-members');
       window.localStorage.removeItem('deka-plan');
       window.localStorage.removeItem('deka-dark-mode');
-      setTeamMembers([createTeamMember('', 'female', 50), createTeamMember('', 'female', 50)]);
+      window.localStorage.removeItem('deka-run-mode');
+      setTeamMembers([createTeamMember('', 'female', 50, 50), createTeamMember('', 'female', 50, 50)]);
       setPlan(null);
       setDarkMode(true);
+      setRunMode('both');
     }
-  }, [setTeamMembers, setPlan, setDarkMode]);
+  }, [setTeamMembers, setPlan, setDarkMode, setRunMode]);
 
   const handlePrint = useCallback(() => window.print(), []);
 
@@ -148,6 +181,7 @@ function App() {
                   onNameChange={handleNameChange}
                   onGenderChange={handleGenderChange}
                   onWeightChange={handleWeightChange}
+                  onCardioCapacityChange={handleCardioCapacityChange}
                   onRemove={handleRemoveMember}
                   canRemove={teamMembers.length > 1}
                 />
@@ -161,18 +195,48 @@ function App() {
               )}
             </div>
 
+            {/* Run Mode Selection */}
+            <div className="run-mode-section">
+              <label className="run-mode-label">Run Assignment</label>
+              <div className="run-mode-options">
+                <button
+                  className={`run-mode-btn ${runMode === 'both' ? 'active' : ''}`}
+                  onClick={() => setRunMode('both')}
+                >
+                  Both Run
+                </button>
+                <button
+                  className={`run-mode-btn ${runMode === 'alternate' ? 'active' : ''}`}
+                  onClick={() => setRunMode('alternate')}
+                >
+                  Alternate
+                </button>
+                <button
+                  className={`run-mode-btn ${runMode === 'stronger' ? 'active' : ''}`}
+                  onClick={() => setRunMode('stronger')}
+                >
+                  By Capacity
+                </button>
+              </div>
+              <p className="run-mode-hint">
+                {runMode === 'both' && 'Both teammates run every transition together'}
+                {runMode === 'alternate' && 'Teammates take turns on runs'}
+                {runMode === 'stronger' && 'Higher cardio capacity = more runs'}
+              </p>
+            </div>
+
             <div className="setup-actions">
               <button
                 className="generate-btn"
                 onClick={handleGeneratePlan}
                 disabled={validMemberCount === 0}
               >
-                <Sparkles size={20} />
+                <Sparkles size={18} />
                 <span>Generate Plan</span>
               </button>
 
               <button className="clear-btn" onClick={handleClearAll}>
-                <Trash2 size={18} />
+                <Trash2 size={16} />
                 <span>Clear All</span>
               </button>
             </div>
